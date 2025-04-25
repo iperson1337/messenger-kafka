@@ -15,7 +15,6 @@ use RdKafka\KafkaConsumer;
 use RdKafka\TopicPartition;
 use function sprintf;
 use function str_replace;
-use function strpos;
 use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 use Symfony\Component\Messenger\Transport\TransportFactoryInterface;
 use Symfony\Component\Messenger\Transport\TransportInterface;
@@ -39,7 +38,7 @@ class KafkaTransportFactory implements TransportFactoryInterface
     public function supports(string $dsn, array $options): bool
     {
         foreach (self::DSN_PROTOCOLS as $protocol) {
-            if (0 === strpos($dsn, $protocol)) {
+            if (str_starts_with($dsn, $protocol)) {
                 return true;
             }
         }
@@ -95,7 +94,7 @@ class KafkaTransportFactory implements TransportFactoryInterface
 
     private function createRebalanceCb(LoggerInterface $logger): \Closure
     {
-        return function (KafkaConsumer $kafka, $err, ?array $topicPartitions = null) use ($logger) {
+        return static function (KafkaConsumer $kafka, $err, ?array $topicPartitions = null) use ($logger) {
             /** @var TopicPartition[] $topicPartitions */
             $topicPartitions = $topicPartitions ?? [];
 
