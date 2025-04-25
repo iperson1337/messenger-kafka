@@ -1,0 +1,26 @@
+services:
+    Iperson1337\Kafka\RdKafka\RdKafkaFactory:
+        public: false
+
+    Iperson1337\Kafka\Messenger\KafkaTransportFactory:
+        public: false
+        tags: ['messenger.transport_factory']
+        arguments:
+            $kafkaFactory: '@Iperson1337\Kafka\RdKafka\RdKafkaFactory'
+            $logger: '@monolog.logger.keycloak'
+
+    Iperson1337\Kafka\Messenger\RestProxyTransportFactory:
+        public: false
+        tags: ['messenger.transport_factory']
+        arguments:
+            $logger: '@monolog.logger.keycloak'
+            $client: '@?Psr\Http\Client\ClientInterface'
+            $requestFactory: '@?Psr\Http\Message\RequestFactoryInterface'
+            $uriFactory: '@?Psr\Http\Message\UriFactoryInterface'
+            $streamFactory: '@?Psr\Http\Message\StreamFactoryInterface'
+
+    monolog.logger.kafka:
+        parent: monolog.logger_prototype
+        public: false
+        arguments:
+            $name: 'kafka'
