@@ -45,7 +45,7 @@ class KafkaTransportTest extends TestCase
         $this->testStartTime = $this->testStartTime ?? new \DateTimeImmutable();
     }
 
-    public function serializerProvider()
+    public function serializerProvider(): array
     {
         $serializer = new Serializer();
         $phpSerializer = new PhpSerializer();
@@ -65,7 +65,7 @@ class KafkaTransportTest extends TestCase
     /**
      * @dataProvider serializerProvider
      */
-    public function testSendAndReceive(SerializerInterface $serializer, Closure $decodeClosure)
+    public function testSendAndReceive(SerializerInterface $serializer, Closure $decodeClosure): void
     {
         $sender = $this->factory->createTransport(
             self::BROKER,
@@ -151,7 +151,7 @@ class KafkaTransportTest extends TestCase
         };
     }
 
-    private function getTopicName()
+    private function getTopicName(): string
     {
         return self::TOPIC_NAME . '_' . $this->testStartTime->getTimestamp() . '_' . $this->testIteration;
     }

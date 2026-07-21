@@ -6,17 +6,15 @@ namespace Iperson1337\Kafka\Messenger;
 
 use Iperson1337\Kafka\RdKafka\RdKafkaFactory;
 use Psr\Log\LoggerInterface;
+use RdKafka\Exception;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 use Symfony\Component\Messenger\Transport\TransportInterface;
 
 class KafkaTransport implements TransportInterface
 {
-
-    /** @var KafkaSender */
     private KafkaSender $sender;
 
-    /** @var KafkaReceiver */
     private KafkaReceiver $receiver;
 
     public function __construct(
@@ -28,11 +26,17 @@ class KafkaTransport implements TransportInterface
     ) {
     }
 
+    /**
+     * @throws Exception
+     */
     public function get(): iterable
     {
         return $this->getReceiver()->get();
     }
 
+    /**
+     * @throws Exception
+     */
     public function ack(Envelope $envelope): void
     {
         $this->getReceiver()->ack($envelope);
@@ -43,6 +47,9 @@ class KafkaTransport implements TransportInterface
         $this->getReceiver()->reject($envelope);
     }
 
+    /**
+     * @throws Exception
+     */
     public function send(Envelope $envelope): Envelope
     {
         return $this->getSender()->send($envelope);

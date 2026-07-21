@@ -7,13 +7,13 @@ services:
         tags: ['messenger.transport_factory']
         arguments:
             $kafkaFactory: '@Iperson1337\Kafka\RdKafka\RdKafkaFactory'
-            $logger: '@monolog.logger.keycloak'
+            $logger: '@monolog.logger.kafka'
 
     Iperson1337\Kafka\Messenger\RestProxyTransportFactory:
         public: false
         tags: ['messenger.transport_factory']
         arguments:
-            $logger: '@monolog.logger.keycloak'
+            $logger: '@monolog.logger.kafka'
             $client: '@?Psr\Http\Client\ClientInterface'
             $requestFactory: '@?Psr\Http\Message\RequestFactoryInterface'
             $uriFactory: '@?Psr\Http\Message\UriFactoryInterface'

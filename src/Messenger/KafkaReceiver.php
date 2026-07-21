@@ -60,10 +60,12 @@ class KafkaReceiver implements ReceiverInterface
                 $this->logger->info('Kafka: Partition EOF reached. Waiting for next message ...');
                 break;
             case RD_KAFKA_RESP_ERR__TIMED_OUT:
-                $this->logger->debug('Kafka: Consumer timeout.');
                 break;
             case RD_KAFKA_RESP_ERR__TRANSPORT:
                 $this->logger->debug('Kafka: Broker transport failure.');
+                break;
+            case RD_KAFKA_RESP_ERR_UNKNOWN_TOPIC_OR_PART:
+                $this->logger->debug(sprintf('Kafka: Topic "%s" not found, waiting...', $this->properties->getTopicName()));
                 break;
             default:
                 throw new TransportException($message->errstr(), $message->err);

@@ -1,11 +1,22 @@
 # Symfony Messenger Kafka Transport
 
 [![License](https://img.shields.io/github/license/iperson1337/messenger-kafka.svg)](LICENSE)
-[![Packagist](https://img.shields.io/packagist/dt/koco/messenger-kafka.svg)](https://packagist.org/packages/iperson1337/messenger-kafka)
-[![CircleCI](https://circleci.com/gh/KonstantinCodes/messenger-kafka.svg?style=svg)](https://circleci.com/gh/iperson1337/messenger-kafka)
-[![Tests](https://github.com/KonstantinCodes/messenger-kafka/workflows/Tests/badge.svg)](https://github.com/iperson1337/messenger-kafka/actions)
+[![Packagist](https://img.shields.io/packagist/dt/iperson1337/messenger-kafka.svg)](https://packagist.org/packages/iperson1337/messenger-kafka)
+[![CircleCI](https://circleci.com/gh/iperson1337/messenger-kafka.svg?style=svg)](https://circleci.com/gh/iperson1337/messenger-kafka)
+[![Tests](https://github.com/iperson1337/messenger-kafka/workflows/Tests/badge.svg)](https://github.com/iperson1337/messenger-kafka/actions)
 
-This bundle aims to provide a simple Kafka transport for Symfony Messenger. Kafka REST Proxy support coming soon.
+This bundle provides a robust Kafka transport integration for Symfony Messenger, allowing you to easily send and receive messages through Apache Kafka. It supports both producers and consumers with a flexible configuration system.
+
+## Features
+
+- Simple integration with Symfony Messenger
+- Support for both producers and consumers
+- Configurable message serialization
+- Flexible topic configuration
+- Support for message headers and keys
+- Asynchronous message processing
+- Detailed logging and error handling
+- Compatible with Pimcore
 
 ## Installation
 
@@ -111,7 +122,7 @@ final class MySerializer implements SerializerInterface
     {
         /** @var ProductCreated $event */
         $event = $envelope->getMessage();
-        
+
         return [
             'key' => $event->getId(),
             'headers' => [],
