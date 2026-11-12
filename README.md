@@ -91,6 +91,14 @@ framework:
                         auto.offset.reset: 'earliest'
 ```
 
+### Delivery guarantee
+
+`send()` succeeds only after the broker has acknowledged the message: the sender waits for the
+delivery report and throws a `TransportException` (with the broker error as message and code) when
+the message was rejected, for example when the client has no write permission on the topic or the
+message is too large. Do not set `delivery.report.only.error` in `kafka_conf`: a send without a
+delivery report is treated as failed.
+
 ## Serializer
 You will most likely want to implement your own Serializer.
 Please see: [https://symfony.com/doc/current/messenger.html#serializing-messages](https://symfony.com/doc/current/messenger.html#serializing-messages)
